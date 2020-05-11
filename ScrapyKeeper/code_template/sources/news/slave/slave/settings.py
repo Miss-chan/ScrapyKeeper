@@ -27,8 +27,8 @@ EXTENSIONS = {
    '{{project_name}}.extensions.RedisSpiderSmartIdleClosedExensions': 500
 }
 
-REDIS_HOST = '172.16.119.6'
-REDIS_PORT = 6379
+REDIS_HOST = '{{redis_host}}'
+REDIS_PORT = '{{redis_port}}'
 REDIS_START_URLS_AS_SET = True
 
 # # 去重类，要使用Bloom Filter请替换DUPEFILTER_CLASS

@@ -19,8 +19,8 @@ ITEM_PIPELINES = {
 }
 
 # scrapy-redis 配置
-REDIS_HOST = '172.16.119.6'
-REDIS_PORT = 6379
+REDIS_HOST = '{{redis_host}}'
+REDIS_PORT = '{{redis_port}}'
 # 去重类，要使用Bloom Filter请替换DUPEFILTER_CLASS
 DUPEFILTER_CLASS = "scrapy_redis_bloomfilter.dupefilter.RFPDupeFilter"
 # # 散列函数的个数，默认为6，可以自行修改

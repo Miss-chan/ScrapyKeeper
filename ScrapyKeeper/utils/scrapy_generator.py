@@ -15,7 +15,6 @@ class TemplateGenerator(object):
             project_name=project_name, start_url=url, name_zh=name_zh
         )
 
-
     @classmethod
     def exec_egg_cli(cls, root_path, template, project_name, is_master):
         suffix = 'master' if is_master else 'slave'

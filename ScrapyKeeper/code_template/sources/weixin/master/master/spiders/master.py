@@ -12,16 +12,16 @@ from ..mysql_db.tables import Content
 
 
 class __ProjectNamecapitalize__Spider(scrapy.Spider):
-    name = "{{project_name}}_master_spider"
+    name = "{{project_name}}_spider"
     session = session
-    start_url = ''
+    urls = requests.get("http://127.0.0.1:5060/start_urls?status={}".format('')).text
+    start_urls = ''
     header = {
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
         'Accept-Encoding': 'gzip, deflate, br',
         'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
         'Cache-Control': 'max-age=0',
         'Connection': 'keep-alive',
-        'Cookie': 'CXID=A7DD9933B0064489336BA48EB827A2CF; SUID=5998556F4B238B0A5DF9BBFE0005D9B0; wuid=AAHbPABVLAAAAAqLFBt+XAQAGwY=; SMYUV=1585031329308125; IPLOC=CN5201; SUV=00268B006F5598595E7C77B1BB0E2017; ssuid=7659773268; sw_uuid=3944064983; ABTEST=3|1586942614|v1; weixinIndexVisited=1; ld=Wkllllllll2WK4WZlllllVfW$UclllllbCQYQyllll9lllllVylll5@@@@@@@@@@; pgv_pvi=974937088; LSTMV=360%2C22; LCLKINT=1735; ad=cTjkyZllll2WqG5elllllVfuk39lllllbCQYQyllllylllllph7ll5@@@@@@@@@@; SNUID=2CED23197573D07DBC00241D76BE34F6; JSESSIONID=aaahwi-nfijofaq81TRgx; sct=11',
         'Host': 'weixin.sogou.com',
         'Sec-Fetch-Dest': 'document',
         'Sec-Fetch-Mode': 'navigate',
@@ -33,7 +33,7 @@ class __ProjectNamecapitalize__Spider(scrapy.Spider):
 
     def start_requests(self):
         "在mysql中查询"
-        for url_index in self.start_url:
+        for url_index in self.start_urls:
             url = "https://weixin.sogou.com/weixin?query=%s" % url_index
             exist = self.session.query(Content).filter_by(url=url).first()
             if not exist:
@@ -45,6 +45,8 @@ class __ProjectNamecapitalize__Spider(scrapy.Spider):
                 )
 
     def parse_list(self, response):
+        if response.status == 302:
+            self.crawler.engine.close_spider(self, 'response msg error %s, job done!' % response.body.decode())
         """***********提取公众号最新一篇文章的url********"""
         url_index = response.xpath("//a[@uigs='account_article_0']/@href").extract_first()
         pub_time = re.findall("document.write\(timeConvert\('(\d+)'\)", response.text)

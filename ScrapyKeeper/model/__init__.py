@@ -8,8 +8,6 @@
 from typing import List
 
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import DateTime, Date, Numeric
-
 from ScrapyKeeper import app
 from sqlalchemy import DateTime, Date, Numeric
 

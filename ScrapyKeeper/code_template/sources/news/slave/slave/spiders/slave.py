@@ -53,7 +53,7 @@ class ProjectNamecapitalizeSlaveSpider(RedisSpider):
         for img_url in img_urls:
             img_url = response.urljoin(img_url)
             img_body = requests.get(url=img_url).content  # 请求附件url
-            imgs_size += int(len(img_body) / 1024) # 单位kb
+            imgs_size += int(len(img_body) / 1024)  # 单位kb
             uuid = upload(response.urljoin(img_body))
             if uuid:
                 uuid_list.append(uuid)

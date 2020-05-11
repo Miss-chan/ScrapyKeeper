@@ -140,7 +140,7 @@ class LogManageSrv(object):
 
         try:
             # # 先根据条件查询一条数据, 方便获取要删除的日志在本地的路径, 用于接下来删除本地日志
-            # es_query = connection.search(index='_all', body=query_json, size=1,
+            # es_query = connection.search(index='duocaiyun-*', body=query_json, size=1,
             #                              _source=["path"])
             # 删除本地日志文件
             # base_path = es_query['hits']['hits'][0]['path']  # 本地日志路径,
